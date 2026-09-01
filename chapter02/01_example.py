@@ -1,5 +1,11 @@
 
 def anagram_solution_1(str1, str2):
+    """
+    求异序词：双循环法，时间复杂度O(N2)
+    :param str1: 字符串1
+    :param str2: 字符串2
+    :return: True or False
+    """
     if len(str1) != len(str2):
         return False
     a_list = list(str2)
@@ -21,6 +27,12 @@ def anagram_solution_1(str1, str2):
     return still_ok
 
 def anagram_solution_2(str1, str2):
+    """
+    求异序词：双循环法，时间复杂度O(N)
+    :param str1: 字符串1
+    :param str2: 字符串2
+    :return: True or False
+    """
     if len(str1) != len(str2):
         return False
     c1 = [0] * 26
