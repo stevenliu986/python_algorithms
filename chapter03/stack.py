@@ -49,3 +49,24 @@ def pair_symbol2(symbol_string):
             s.pop()
 
     return s.is_empty()
+
+# 栈的应用 - 进制转换
+def base_converter(dec_number: int, base: int) -> str:
+    """
+    任意进制转换
+    :param dec_number: 源数字
+    :param base: 进制
+    :return: 根据base转换后的结果
+    """
+    if dec_number == 0:
+        return '0'
+    s = Stack()
+    digits = '0123456789ABCDEF'
+    while dec_number > 0:
+        rem = dec_number % base
+        s.push(rem)
+        dec_number //= base
+    converted_string = ''
+    while not s.is_empty():
+        converted_string += digits[s.pop()]
+    return converted_string
