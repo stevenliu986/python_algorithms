@@ -42,7 +42,7 @@ def pair_symbol2(symbol_string):
     for char in symbol_string:
         if char in mapping.values():
             s.push(char)
-        elif char in mapping:
+        elif char in mapping: # 检查 char 是不是 mapping 的 key
             # s.peek() 获取栈顶元素但不弹出
             if s.is_empty() or s.peek() != mapping[char]:
                 return False
