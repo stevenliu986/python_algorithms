@@ -17,7 +17,7 @@ class Stack:
     def is_empty(self):
         return self.items == []
 
-# 栈的应用 - 括号匹配
+# 栈的应用 - 圆括号匹配
 def pair_symbol(symbol_string):
     s= Stack()
     for symbol in symbol_string:
@@ -27,4 +27,25 @@ def pair_symbol(symbol_string):
             if s.is_empty():
                 return False
             s.pop()
+    return s.is_empty()
+
+def matches(left_symbol, right_symbol):
+    opens = '({['
+    closes = ')}]'
+    return opens.index(left_symbol) == closes.index(right_symbol)
+
+# 栈的应用 - 所有类型括号匹配
+def pair_symbol2(symbol_string):
+    s = Stack()
+    mapping = {")": "(", "]": "[", "}": "{"}
+
+    for char in symbol_string:
+        if char in mapping.values():
+            s.push(char)
+        elif char in mapping:
+            # s.peek() 获取栈顶元素但不弹出
+            if s.is_empty() or s.peek() != mapping[char]:
+                return False
+            s.pop()
+
     return s.is_empty()
