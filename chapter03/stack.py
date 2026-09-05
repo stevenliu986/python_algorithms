@@ -70,3 +70,28 @@ def base_converter(dec_number: int, base: int) -> str:
     while not s.is_empty():
         converted_string += digits[s.pop()]
     return converted_string
+
+
+def infix_postfix_converter(algorithm_str):
+    """
+    这是一个将中缀表达式转换为后缀表达式的函数 - 仅限简单的四则运算，不支持括号
+    :param algorithm_str: 中缀表达式字符串
+    :return: 后缀表达式字符串
+    """
+    s = Stack()
+    priority = {'*':3, '/': 3, '+': 1, '-':1}
+    result = []
+    for char in algorithm_str:
+        if char == ' ':
+            continue
+        if char not in priority:
+            result.append(char)
+        else:
+            while not s.is_empty() and priority[char] <= priority[s.peek()]:
+                pop_result = s.pop()
+                result.append(pop_result)
+            s.push(char)
+    while not s.is_empty():
+        result.append(s.pop())
+    return ''.join(result)
+print(infix_postfix_converter('a + b * c'))
