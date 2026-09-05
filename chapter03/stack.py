@@ -72,26 +72,26 @@ def base_converter(dec_number: int, base: int) -> str:
     return converted_string
 
 
+import re
+
 def infix_postfix_converter(infix_str):
-    """
-    这是一个将中缀表达式转换为后缀表达式的函数 - 仅限简单的四则运算，不支持括号
-    :param infix_str: 中缀表达式字符串
-    :return: 后缀表达式字符串
-    """
     s = Stack()
-    priority = {'*':3, '/': 3, '+': 1, '-':1}
+    priority = {'*': 3, '/': 3, '+': 1, '-': 1}
     result = []
-    for char in infix_str:
-        if char == ' ':
-            continue
-        if char not in priority:
-            result.append(char)
+
+    # 使用正则匹配：自动提取多位数字、字母变量和运算符，无视任意空格
+    tokens = re.findall(r'\d+|[a-zA-Z]+|[+\-*/]', infix_str)
+
+    for token in tokens:
+        if token not in priority:
+            result.append(token)
         else:
-            while not s.is_empty() and priority[char] <= priority[s.peek()]:
-                pop_result = s.pop()
-                result.append(pop_result)
-            s.push(char)
+            while not s.is_empty() and priority[token] <= priority[s.peek()]:
+                result.append(s.pop())
+            s.push(token)
+
     while not s.is_empty():
         result.append(s.pop())
-    return ''.join(result)
-print(infix_postfix_converter('a + b * c'))
+
+    return ' '.join(result)
+print(infix_postfix_converter('100 + 23 * 11'))
