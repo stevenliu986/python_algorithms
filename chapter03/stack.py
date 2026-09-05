@@ -71,27 +71,46 @@ def base_converter(dec_number: int, base: int) -> str:
         converted_string += digits[s.pop()]
     return converted_string
 
-
 import re
 
 def infix_postfix_converter(infix_str):
+    """
+    支持多位数、任意空格以及嵌套括号的中缀转后缀表达式转换器
+    """
     s = Stack()
-    priority = {'*': 3, '/': 3, '+': 1, '-': 1}
+    # 注意：'(' 在栈内被比对时，视为最低优先级，防止被普通运算符错误弹出
+    priority = {'*': 3, '/': 3, '+': 2, '-': 2, '(': 1}
     result = []
 
-    # 使用正则匹配：自动提取多位数字、字母变量和运算符，无视任意空格
-    tokens = re.findall(r'\d+|[a-zA-Z]+|[+\-*/]', infix_str)
+    # 1. 修改正则表达式：加入 '(' 和 ')' 的匹配
+    tokens = re.findall(r'\d+|[a-zA-Z]+|[+\-*/()]', infix_str)
 
     for token in tokens:
-        if token not in priority:
-            result.append(token)
-        else:
+        # 2. 遇到左括号：直接压栈，作为隔离屏障
+        if token == '(':
+            s.push(token)
+
+        # 3. 遇到右括号：不断弹栈，直到弹出对应的左括号为止
+        elif token == ')':
+            top_token = s.pop()
+            while top_token != '(':
+                result.append(top_token)
+                top_token = s.pop()
+
+        # 4. 遇到运算符：比对优先级，弹出高/同优先级的运算符
+        elif token in priority:
             while not s.is_empty() and priority[token] <= priority[s.peek()]:
                 result.append(s.pop())
             s.push(token)
 
+        # 5. 遇到操作数（数字或字母）：直接追加到输出
+        else:
+            result.append(token)
+
+    # 6. 清空栈中剩余的运算符
     while not s.is_empty():
         result.append(s.pop())
 
     return ' '.join(result)
-print(infix_postfix_converter('100 + 23 * 11'))
+
+print(infix_postfix_converter('10 + 3 * 5 / (16 - 4)'))
