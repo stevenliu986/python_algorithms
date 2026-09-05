@@ -72,16 +72,16 @@ def base_converter(dec_number: int, base: int) -> str:
     return converted_string
 
 
-def infix_postfix_converter(algorithm_str):
+def infix_postfix_converter(infix_str):
     """
     这是一个将中缀表达式转换为后缀表达式的函数 - 仅限简单的四则运算，不支持括号
-    :param algorithm_str: 中缀表达式字符串
+    :param infix_str: 中缀表达式字符串
     :return: 后缀表达式字符串
     """
     s = Stack()
     priority = {'*':3, '/': 3, '+': 1, '-':1}
     result = []
-    for char in algorithm_str:
+    for char in infix_str:
         if char == ' ':
             continue
         if char not in priority:
