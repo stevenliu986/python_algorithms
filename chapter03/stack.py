@@ -114,3 +114,52 @@ def infix_postfix_converter(infix_str):
     return ' '.join(result)
 
 print(infix_postfix_converter('10 + 3 * 5 / (16 - 4)'))
+
+# 后缀表达式求值
+def postfix_calculator(postfix_str):
+    s = Stack()
+    tokens = postfix_str.split()
+    for token in tokens:
+        if token not in '+-*/':
+            s.push(int(token))
+        else:
+            right = s.pop()
+            left = s.pop()
+            if token == '+':
+                left += right
+            elif token == '-':
+                left -= right
+            elif token == '*':
+                left *= right
+            else:
+                left /= right
+            s.push(left)
+    return s.pop()
+
+import operator
+
+def optimized_postfix_calculator(postfix_str):
+    """
+    优化后的后缀表达式求值
+    :param postfix_str: 后缀表达式
+    :return: 后缀表达式求值结果
+    """
+    s = Stack()
+    tokens = postfix_str.split()
+    ops = {
+        '+': operator.add,
+        '-': operator.sub,
+        '*': operator.mul,
+        '/': operator.truediv,
+    }
+    for token in tokens:
+        if token not in ops:
+            s.push(int(token))
+        else:
+            right = s.pop()
+            left = s.pop()
+            s.push(ops[token](left, right))
+    return s.pop()
+
+print(postfix_calculator(infix_postfix_converter('10 + 3 * 5 / (16 - 4)')))
+print(optimized_postfix_calculator(infix_postfix_converter('10 + 3 * 5 / (16 - 4)')))
