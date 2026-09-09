@@ -3,19 +3,19 @@
 """
 class Queue:
     def __init__(self):
-        self.items = []
+        self._items = []
 
     def enqueue(self, item):
-        self.items.insert(0, item)
+        self._items.insert(0, item)
 
     def dequeue(self):
-        return self.items.pop()
+        return self._items.pop()
 
     def is_empty(self):
-        return self.items == []
+        return self._items == []
 
     def size(self):
-        return len(self.items)
+        return len(self._items)
 
 def hot_potato(name_list,num):
     sim_queue = Queue()
