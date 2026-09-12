@@ -38,7 +38,7 @@ class Printer:
 
     def tick(self): # 打印一秒
         if self.current_task is not None:
-            self.time_remaining -= self.time_remaining
+            self.time_remaining -= 1
             if self.time_remaining <= 0:
                 self.current_task = None
 
@@ -82,9 +82,19 @@ def simulation(num_seconds, pages_per_minute):
 
         lab_printer.tick()
 
-    average_waiting_time = sum(waiting_times) / len(waiting_times)
-    print(f"Average waiting time: {average_waiting_time:6.2f} seconds" + f"{print_queue.size():3d} tasks remaining.")
+    if waiting_times:
+        average_waiting_time = sum(waiting_times) / len(waiting_times)
+        print(f"Average waiting time: {average_waiting_time:6.2f} seconds" + f"{print_queue.size():3d} tasks remaining.")
+    else:
+        print(
+            "No tasks were completed during the simulation. "
+            f"{print_queue.size():3d} tasks remaining."
+        )
 
 def new_print_task():
     # 概率同样是 1/180，但避免了产生完整的整数区间，执行效率更高
     return random.random() < (1 / 180)
+
+# 执行模拟
+for _ in range(10):
+    simulation(3600, 5)
