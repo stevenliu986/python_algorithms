@@ -47,6 +47,7 @@ class Printer:
 
     def start_next(self, new_task):
         self.current_task = new_task
+        # 根据任务的页数计算完成打印所需的时间（单位：秒）
         self.time_remaining = new_task.get_pages() * 60 / self.page_rate
 
 import random
@@ -54,7 +55,7 @@ import random
 class Task:
     def __init__(self, time):
         self.time_stamp = time
-        self.pages = random.randrange(1, 21) # random这个模块需要研究下
+        self.pages = random.randrange(1, 21) # 随机产生打印的页数（1 - 20 页）
 
     def get_pages(self):
         return self.pages
@@ -82,6 +83,7 @@ def simulation(num_seconds, pages_per_minute):
 
         lab_printer.tick()
 
+    # 避免出现除 0 的情况
     if waiting_times:
         average_waiting_time = sum(waiting_times) / len(waiting_times)
         print(f"Average waiting time: {average_waiting_time:6.2f} seconds" + f"{print_queue.size():3d} tasks remaining.")
