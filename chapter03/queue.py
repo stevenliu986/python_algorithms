@@ -1,5 +1,5 @@
 """
-队伍的概念及应用
+队列的概念及应用
 """
 class Queue:
     def __init__(self):
