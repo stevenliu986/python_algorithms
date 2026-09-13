@@ -90,4 +90,16 @@ class UnorderedList:
 
         return False  # 遍历结束仍未找到目标元素
 
+    def add_rear(self,item):
+        new_node = Node(item)
+        current = self._head
+
+        # 如果头节点为空，则直接添加
+        if current is None:
+            self._head = new_node
+        else:
+            while current._next is not None:
+                current = current._next
+            current._next = new_node
+
 
