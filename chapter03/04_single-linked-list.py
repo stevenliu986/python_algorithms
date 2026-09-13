@@ -90,6 +90,7 @@ class UnorderedList:
 
         return False  # 遍历结束仍未找到目标元素
 
+    #  绝大多数情况下，不在尾部添加节点，因为它的时间复杂度是O(n)，不过可以通过维护一个尾指针self._tail使得时间复杂度优化为O(1)
     def add_rear(self,item):
         new_node = Node(item)
         current = self._head
